@@ -8,7 +8,7 @@
 
 - Specify the data the application must persist and the rules around it.
 - Plan and generate a PostgreSQL schema with migrations and seed data.
-- Stand up the database locally in Docker and verify it.
+- Connect to the Azure PostgreSQL database and verify the schema.
 
 > [!IMPORTANT]
 > **Spec-driven mindset**
@@ -45,11 +45,12 @@
    ```text
    /speckit.plan
 
-   Implement the persistence layer on PostgreSQL 15+ running in Docker.
+   Implement the persistence layer on PostgreSQL 15+ hosted on Azure Database for
+   PostgreSQL Flexible Server. Connection details are read from a `db-config.env`
+   file at the project root.
    - Use normalized tables with surrogate primary keys and foreign keys.
    - Model the status lifecycle as a constrained enum or lookup table.
    - Manage schema with Alembic migrations (versioned, reversible).
-   - Provide a docker-compose service for local PostgreSQL with a named volume.
    - Provide a seed script with a few customers, claims, documents, and one admin.
    - Add indexes on foreign keys and on claim status for the admin queue.
    Follow the project Constitution.
@@ -63,14 +64,14 @@
 
 ## Verify the result
 
-- Start the database: `docker compose up -d` (or the command the agent documented).
+- Connect to the Azure PostgreSQL instance using the credentials in `db-config.env` (e.g., via `psql` or a database client).
 - Apply migrations: run the Alembic upgrade command from the generated README.
-- Run the seed script, then connect with `psql` and confirm the tables and sample rows exist.
+- Run the seed script, then confirm the tables and sample rows exist.
 - Query the admin queue index: list claims by status to confirm it returns seeded data.
 
 > [!NOTE]
 > **Checkpoint — you're done when:**
-> - `docker compose` brings up PostgreSQL with a persistent volume.
+> - The Azure PostgreSQL instance is reachable using `db-config.env` credentials.
 > - Migrations apply cleanly and create all specified tables and constraints.
 > - Seed data is present and queryable; status values are constrained to the lifecycle.
 

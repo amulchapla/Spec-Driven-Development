@@ -109,7 +109,7 @@ Draft → Submitted → Under Review → Info Requested → Approved / Rejected 
                          |
                   SQLAlchemy / Alembic
                          |
-          PostgreSQL Database  (Docker container)   <-- Component 3
+          PostgreSQL Database  (Azure Flexible Server)  <-- Component 3
 ```
 
 > [!TIP]
@@ -137,8 +137,9 @@ Before Lab 0, make sure you have:
 
 - A **GitHub account with GitHub Copilot enabled** (a free plan is sufficient to learn).
 - **Visual Studio Code** with the **GitHub Copilot** and **GitHub Copilot Chat** extensions installed and signed in.
-- **Git**, **Python 3.11+**, **Node.js 20+**, and **Docker Desktop** installed.
+- **Git**, **Python 3.11+**, and **Node.js 20+** installed.
 - The **`uv`** package manager (from Astral) — Spec Kit's CLI is Python-based and `uv` makes installation clean and reproducible.
+- An **Azure subscription** with an Azure Database for PostgreSQL Flexible Server provisioned (or connection credentials provided by the facilitator).
 
 ---
 

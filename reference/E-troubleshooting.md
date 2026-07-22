@@ -10,7 +10,7 @@
 | Agent drifts from the spec | Re-anchor: ask it to re-read `spec.md`/`plan.md` and regenerate only the affected task. |
 | Implement diff is huge | The task was too large. Ask the agent to break it into smaller tasks. |
 | UI shows CORS errors | Enable CORS in the **API** for the front-end origin (a Lab 4 fix, not a browser one). |
-| API can't reach the database | Check the database URL env var; in Docker, use the **service name**, not `localhost`. |
+| API can't reach the database | Check `db-config.env` for correct Azure hostname (`<server>.postgres.database.azure.com`), ensure your client IP is added to the Azure firewall rules, and confirm `DB_SSLMODE=require`. |
 
 ---
 

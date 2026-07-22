@@ -17,14 +17,15 @@
 
 ## Steps
 
-1. **Orchestrate the stack.** Ask Copilot to add a top-level `docker-compose.yml` that runs the database, API, and front end together, wiring the API's database URL and the front end's API base URL via environment variables.
+1. **Orchestrate the stack.** Ask Copilot to create a script that starts all services locally, wiring the API's database connection (from `db-config.env`) and the front end's API base URL via environment variables.
 
    ```text
    # In Copilot Chat:
-   Create a docker-compose at the repo root that runs three services - db (PostgreSQL),
-   api (the FastAPI app), and web (the React app) - on a shared network. Pass the
-   database URL to the api and the api base URL to the web service via environment
-   variables. Ensure the api waits for the db to be ready before starting.
+   Create a run script (e.g., run-all.ps1 / run-all.sh) that starts both the API
+   (uvicorn) and the React dev server (npm run dev) locally. The API should read its
+   database connection from db-config.env at the project root and be available on
+   port 8000. The React app should read the API base URL from an env var and be
+   available on port 5173. Include a stop/cleanup mechanism.
    ```
 
 2. **Run end-to-end scenarios.** Turn your spec's acceptance criteria into a manual test pass. Walk the full customer journey (file → upload → submit → see status) and the full admin journey (review → request info or approve/reject → history updates). Confirm both personas see consistent state.
@@ -46,14 +47,14 @@
 
 > [!NOTE]
 > **Checkpoint — you're done when:**
-> - `docker compose up` brings the whole application online.
+> - The API and front-end are running locally and connected to Azure PostgreSQL.
 > - Both personas' complete journeys work across all three tiers.
 > - `/speckit.analyze` reports no significant drift.
 > - A spec change propagated through Plan → Tasks → Implement into working code.
 
 > [!WARNING]
 > **Watch out**
-> - Services can't reach each other? Containers talk by **service name**, not `localhost` — check the env vars and network.
+> - API can't reach the database? Check that `db-config.env` has the correct Azure hostname, your IP is allowed in the Azure firewall rules, and SSL mode is set to `require`.
 > - Tempted to hand-edit code to make the change "faster"? That breaks the discipline and desyncs the spec. Edit the spec and regenerate.
 
 **What you learned:** how the three components integrate into one application — and, most importantly, why a living specification turns change from a risk into a routine, reviewable operation.

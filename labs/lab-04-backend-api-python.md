@@ -51,7 +51,8 @@
    - Expose OpenAPI/Swagger docs at /docs.
    - Project layout: routers, services, models, schemas; dependency injection for DB.
    - Tests with pytest covering each endpoint and every status transition.
-   Connect to the PostgreSQL service from Lab 3. Follow the Constitution.
+   Connect to the Azure PostgreSQL instance using the connection settings from
+   `db-config.env`. Follow the Constitution.
    ```
 
 4. **Tasks.** Run `/speckit.tasks`. The agent breaks the plan into small, testable units. Expect tasks such as: app skeleton and DB session, auth and authorization, claim CRUD endpoints, submit/transition endpoints, upload endpoint, admin queue and review endpoints, and pytest suites for each.

@@ -25,7 +25,6 @@
    git --version
    python --version      # expect 3.11 or later
    node --version        # expect 20 or later
-   docker --version
    uv --version          # the Astral package manager
    ```
 
@@ -72,11 +71,42 @@
 
 8. **Tour the scaffold.** In the Explorer, open `.github/prompts/`, `.github/copilot-instructions.md`, and `.specify/`. These are the files that drive everything that follows.
 
+9. **Set up the database configuration file.** Create a `db-config.env` file at the project root with your Azure PostgreSQL connection details (provided by the facilitator, or from your own Azure subscription):
+
+   ```bash
+   # db-config.env — DO NOT commit this file
+   DB_HOST=<your-server>.postgres.database.azure.com
+   DB_PORT=5432
+   DB_NAME=claims_db
+   DB_USER=<your-username>
+   DB_PASSWORD=<your-password>
+   DB_SSLMODE=require
+   ```
+
+   Add `db-config.env` to `.gitignore` to avoid committing credentials:
+
+   ```bash
+   echo "db-config.env" >> .gitignore
+   ```
+
+10. **Verify Azure PostgreSQL connectivity.** Confirm you can reach the database:
+
+    ```bash
+    psql "host=<your-server>.postgres.database.azure.com port=5432 dbname=claims_db user=<your-username> sslmode=require"
+    ```
+
+    If `psql` is not installed, you can verify connectivity with Python:
+
+    ```bash
+    python -c "import psycopg2; conn = psycopg2.connect(host='<your-server>.postgres.database.azure.com', port=5432, dbname='claims_db', user='<your-username>', password='<your-password>', sslmode='require'); print('Connected!'); conn.close()"
+    ```
+
 > [!NOTE]
 > **Checkpoint — you're done when:**
 > - `specify check` reports your environment is ready.
 > - Typing `/` in Copilot Chat lists the `/speckit.*` commands.
 > - The `.github/prompts/` and `.specify/` folders exist in your repository.
+> - The `db-config.env` file exists and you can connect to the Azure PostgreSQL instance.
 
 > [!WARNING]
 > **Watch out**
